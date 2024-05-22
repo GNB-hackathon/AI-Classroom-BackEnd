@@ -12,6 +12,9 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long typeId;
 
-    private String type;
+    private Long memberId;
+
+    @OneToOne(mappedBy = "type")
+    private Member member;
 
 }

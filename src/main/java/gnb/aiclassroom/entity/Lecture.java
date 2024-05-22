@@ -19,5 +19,8 @@ public class Lecture extends BaseTimeEntity {
 
     private String title;
 
+    @ManyToOne(fetch = FetchType.LAZY) // ManyToOne 이 연관관계의 주인
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }
