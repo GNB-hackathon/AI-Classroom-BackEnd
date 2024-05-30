@@ -1,5 +1,6 @@
 package gnb.aiclassroom.entity;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 
 @Getter
