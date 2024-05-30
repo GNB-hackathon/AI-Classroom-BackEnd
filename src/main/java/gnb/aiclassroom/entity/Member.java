@@ -3,6 +3,7 @@ package gnb.aiclassroom.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
+
+    private String name;
 
     private String id;
 
@@ -27,8 +30,7 @@ public class Member {
 
     private String profile;
 
-    @OneToOne // 연관관계 주인
-    @JoinColumn(name = "type_id")
+    @Enumerated(EnumType.STRING) // Enum을 문자열로 저장
     private Type type;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL) // 강의 목록
