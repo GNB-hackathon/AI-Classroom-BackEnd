@@ -3,11 +3,9 @@ package gnb.aiclassroom.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,8 +17,14 @@ public class Lecture extends BaseTimeEntity {
 
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY) // ManyToOne 이 연관관계의 주인
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private String category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor_id")
+    private Tutor tutor; // 업로드한 튜터
+
+    @ManyToMany(mappedBy = "ownedLectures", fetch = FetchType.LAZY)
+    private Set<Student> owners = new HashSet<>(); // 소장하고 있는 학생들
+
+    private String content; // 내용
 }

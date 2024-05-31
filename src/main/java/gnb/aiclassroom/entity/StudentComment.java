@@ -7,8 +7,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Comment extends BaseTimeEntity{
-
+public class StudentComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
@@ -16,8 +15,8 @@ public class Comment extends BaseTimeEntity{
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")

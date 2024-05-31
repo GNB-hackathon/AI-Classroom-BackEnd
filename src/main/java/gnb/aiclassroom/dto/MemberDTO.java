@@ -1,6 +1,5 @@
 package gnb.aiclassroom.dto;
 
-import gnb.aiclassroom.entity.Type;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
