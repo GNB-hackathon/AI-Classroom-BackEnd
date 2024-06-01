@@ -1,6 +1,7 @@
 package gnb.aiclassroom.dto;
 
 import gnb.aiclassroom.entity.Tutor;
+import gnb.aiclassroom.entity.Vidio;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,8 @@ public class LectureDTO {
     private String tutorId; // 실제 튜터의 아이디
 
     private String content;
+
+    private Vidio vidio;
 
 
 }

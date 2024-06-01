@@ -1,12 +1,15 @@
 package gnb.aiclassroom.repository;
 
 import gnb.aiclassroom.entity.Lecture;
+import gnb.aiclassroom.entity.Vidio;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface LectureRepository extends CrudRepository<Lecture,Long> {
 
     @Query("SELECT l FROM Lecture l " +
@@ -24,4 +27,7 @@ public interface LectureRepository extends CrudRepository<Lecture,Long> {
 
     @Query("SELECT l FROM Lecture l WHERE l.category LIKE %:category%")
     List<Lecture> searchByCategory(@Param("category") String category);
+
+
+
 }

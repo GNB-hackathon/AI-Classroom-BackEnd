@@ -1,6 +1,7 @@
 package gnb.aiclassroom.controller;
 
 import gnb.aiclassroom.dto.LectureDTO;
+import gnb.aiclassroom.dto.SearchResult;
 import gnb.aiclassroom.entity.Lecture;
 import gnb.aiclassroom.service.LectureService;
 import lombok.RequiredArgsConstructor;
@@ -49,9 +50,15 @@ public class LectureController {
     // 전체 강의 조회
     @CrossOrigin
     @GetMapping("/search/all")
-    public ResponseEntity<List<Lecture>> AllLectures() {
-        List<Lecture> lectures = lectureService.findAll();
-        return new ResponseEntity<>(lectures, HttpStatus.OK);
+    public ResponseEntity<List<SearchResult>> AllLectures() {
+        List<Lecture> allLectures = lectureService.findAll();
+        if(!allLectures.isEmpty()){
+            // Lecture entity 리스트를 searchResult 리스트로 변환
+            List<SearchResult> searchResults = lectureService.convertToDTO(allLectures);
+            return new ResponseEntity(searchResults, HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
     }
 
     // 키워드로 강의 조회
@@ -59,7 +66,13 @@ public class LectureController {
     @GetMapping("/search/keyword")
     public ResponseEntity<List<Lecture>> searchByKeyword(@RequestParam String keyword) {
         List<Lecture> lectures = lectureService.searchByKeyword(keyword);
-        return new ResponseEntity<>(lectures, HttpStatus.OK);
+        if(!lectures.isEmpty()){
+            // Lecture entity 리스트를 searchResult 리스트로 변환
+            List<SearchResult> searchResults = lectureService.convertToDTO(lectures);
+            return new ResponseEntity(searchResults, HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
     }
 
     // 제목으로 강의 조회
@@ -67,7 +80,14 @@ public class LectureController {
     @GetMapping("/search/title")
     public ResponseEntity<List<Lecture>> searchByTitle(@RequestParam String title) {
         List<Lecture> lectures = lectureService.searchByTitle(title);
-        return new ResponseEntity<>(lectures, HttpStatus.OK);
+
+        if(!lectures.isEmpty()){
+            // Lecture entity 리스트를 searchResult 리스트로 변환
+            List<SearchResult> searchResults = lectureService.convertToDTO(lectures);
+            return new ResponseEntity(searchResults, HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
     }
 
     // 튜터 명으로 강의 조회
@@ -75,7 +95,14 @@ public class LectureController {
     @GetMapping("/search/tutorNickname")
     public ResponseEntity<List<Lecture>> searchByTutorNickname(@RequestParam String nickname) {
         List<Lecture> lectures = lectureService.searchByTutorNickname(nickname);
-        return new ResponseEntity<>(lectures, HttpStatus.OK);
+
+        if(!lectures.isEmpty()){
+            // Lecture entity 리스트를 searchResult 리스트로 변환
+            List<SearchResult> searchResults = lectureService.convertToDTO(lectures);
+            return new ResponseEntity(searchResults, HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
     }
 
     // 카테고리로 조회
@@ -83,7 +110,14 @@ public class LectureController {
     @GetMapping("/search/category")
     public ResponseEntity<List<Lecture>> searchByCategory(@RequestParam String category) {
         List<Lecture> lectures = lectureService.searchByCategory(category);
-        return new ResponseEntity<>(lectures, HttpStatus.OK);
+
+        if(!lectures.isEmpty()){
+            // Lecture entity 리스트를 searchResult 리스트로 변환
+            List<SearchResult> searchResults = lectureService.convertToDTO(lectures);
+            return new ResponseEntity(searchResults, HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
     }
 
 

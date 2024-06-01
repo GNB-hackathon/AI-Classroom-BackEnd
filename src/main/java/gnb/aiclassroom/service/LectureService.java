@@ -1,6 +1,7 @@
 package gnb.aiclassroom.service;
 
 import gnb.aiclassroom.dto.LectureDTO;
+import gnb.aiclassroom.dto.SearchResult;
 import gnb.aiclassroom.entity.Lecture;
 import gnb.aiclassroom.entity.Tutor;
 import gnb.aiclassroom.entity.Vidio;
@@ -14,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -139,6 +142,28 @@ public class LectureService {
     // 카테고리로 검색
     public List<Lecture> searchByCategory(String category) {
         return lectureRepository.searchByCategory(category);
+    }
+
+
+    // Entity 를 DTO 로 변환
+    public List<SearchResult> convertToDTO(List<Lecture> lectures) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        List<SearchResult> results = new ArrayList<>();
+        for (Lecture lecture : lectures) {
+            SearchResult searchResult = new SearchResult();
+            searchResult.setTitle(lecture.getTitle());
+            searchResult.setCategory(lecture.getCategory());
+            searchResult.setUrl(lecture.getVidio().getUrl());
+            searchResult.setContent(lecture.getContent());
+            searchResult.setCreatedDate(formatter.format(lecture.getCreatedDate()));
+            searchResult.setModifiedDate(formatter.format(lecture.getModifiedDate()));
+            searchResult.setTutorId(lecture.getTutor().getId());
+
+            results.add(searchResult);
+        }
+        return results;
     }
 
 }
