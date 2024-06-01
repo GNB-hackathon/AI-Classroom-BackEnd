@@ -18,19 +18,11 @@ public class CommentController {
     private final CommentService commentService;
 
 
-    // 학생 댓글 작성
+    //댓글 작성
     @CrossOrigin
-    @PostMapping("/{lectureId}/student/comment")
+    @PostMapping("/{lectureId}/comment")
     public ResponseEntity<String> createStudentComment(@PathVariable Long lectureId, @RequestBody CommentDTO commentDTO) {
-        commentService.createStudentComment(lectureId,commentDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Comment created successfully.");
-    }
-
-    // 튜터 댓글 작성
-    @CrossOrigin
-    @PostMapping("/{lectureId}/tutor/comment")
-    public ResponseEntity<String> createTutorComment(@PathVariable Long lectureId, @RequestBody CommentDTO commentDTO) {
-        commentService.createTutorComment(lectureId,commentDTO);
+        commentService.createComment(lectureId,commentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("Comment created successfully.");
     }
 

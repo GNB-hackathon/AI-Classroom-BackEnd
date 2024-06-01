@@ -1,32 +1,53 @@
 package gnb.aiclassroom.service;
 
 import gnb.aiclassroom.dto.CommentDTO;
-import gnb.aiclassroom.dto.LectureDTO;
-import gnb.aiclassroom.entity.Lecture;
-import gnb.aiclassroom.entity.StudentComment;
-import gnb.aiclassroom.entity.Tutor;
-import gnb.aiclassroom.entity.Vidio;
+import gnb.aiclassroom.entity.*;
+import gnb.aiclassroom.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
 
+    private final TutorCommentRepository tutorcommentRepository;
+    private final StudentCommentRepostiory studentCommentRepostiory;
+    private final LectureRepository lectureRepository;
+    private final StudentRepository studentRepository;
+    private final TutorRepository tutorRepository;
 
-    public void createStudentComment(Long lectureId, CommentDTO commentDTO) {
-        StudentComment comment= new StudentComment();
-        comment.setContent(commentDTO.getContent());
-        comment.setLectureId(lectureId);
-        comment.setUserId(commentDTO.getUserId()); // 가정: CommentDTO에 userId가 포함되어 있음
-        comment.setUserType("Student"); // 또는 다른 로직에 따라
-        commentRepository.save(comment);
-    }
 
-    public void createTutorComment(Long lectureId, CommentDTO commentDTO) {
+    public void createComment(Long lectureId, CommentDTO commentDTO) {
+
+        if(commentDTO.getUserType().equals("student")){
+            StudentComment comment= new StudentComment();
+            comment.setContent(commentDTO.getContent());
+
+            Optional<Lecture> lecture = lectureRepository.findById(lectureId);
+
+            comment.setLecture(lecture.get());
+
+            Student student = studentRepository.findById(commentDTO.getId());
+            comment.setStudent(student);
+
+            studentCommentRepostiory.save(comment);
+
+        }else if (commentDTO.getUserType().equals("tutor")){
+            TutorComment comment= new TutorComment();
+            comment.setContent(commentDTO.getContent());
+
+            Optional<Lecture> lecture = lectureRepository.findById(lectureId);
+
+            comment.setLecture(lecture.get());
+
+            Tutor tutor = tutorRepository.findById(commentDTO.getId());
+            comment.setTutor(tutor);
+
+            tutorcommentRepository.save(comment);
+        }
+
     }
 
     public void commentAll(Long lectureId, CommentDTO commentDTO) {

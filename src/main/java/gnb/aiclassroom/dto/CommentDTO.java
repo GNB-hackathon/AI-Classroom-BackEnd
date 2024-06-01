@@ -14,5 +14,5 @@ public class CommentDTO {
 
     private String userType;
 
-
+    private String id;
 }
