@@ -32,8 +32,8 @@ public class LectureController {
     // 강의 수정
     @CrossOrigin
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateLecture(@PathVariable Long id, @RequestBody LectureDTO lectureDTO) {
-        lectureService.updateLecture(id, lectureDTO);
+    public ResponseEntity<String> updateLecture(@PathVariable Long id, @RequestPart LectureDTO lectureDTO, @RequestPart("vidio") MultipartFile file) {
+        lectureService.updateLecture(id, lectureDTO,file);
         return new ResponseEntity<>("Lecture updated successfully", HttpStatus.OK);
     }
 
