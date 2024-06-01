@@ -1,6 +1,7 @@
 package gnb.aiclassroom.controller;
 
 import gnb.aiclassroom.dto.LectureDTO;
+import gnb.aiclassroom.entity.Lecture;
 import gnb.aiclassroom.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,12 +46,45 @@ public class LectureController {
         return new ResponseEntity<>("Lecture deleted successfully", HttpStatus.OK);
     }
 
-    // 강의 검색
+    // 전체 강의 조회
     @CrossOrigin
-    @GetMapping("/search")
-    public ResponseEntity<List<LectureDTO>> searchLectures(@RequestParam String keyword) {
-        List<LectureDTO> lectures = lectureService.searchLectures(keyword);
+    @GetMapping("/search/all")
+    public ResponseEntity<List<Lecture>> AllLectures() {
+        List<Lecture> lectures = lectureService.findAll();
         return new ResponseEntity<>(lectures, HttpStatus.OK);
     }
+
+    // 키워드로 강의 조회
+    @CrossOrigin
+    @GetMapping("/search/keyword")
+    public ResponseEntity<List<Lecture>> searchByKeyword(@RequestParam String keyword) {
+        List<Lecture> lectures = lectureService.searchByKeyword(keyword);
+        return new ResponseEntity<>(lectures, HttpStatus.OK);
+    }
+
+    // 제목으로 강의 조회
+    @CrossOrigin
+    @GetMapping("/search/title")
+    public ResponseEntity<List<Lecture>> searchByTitle(@RequestParam String title) {
+        List<Lecture> lectures = lectureService.searchByTitle(title);
+        return new ResponseEntity<>(lectures, HttpStatus.OK);
+    }
+
+    // 튜터 명으로 강의 조회
+    @CrossOrigin
+    @GetMapping("/search/tutorNickname")
+    public ResponseEntity<List<Lecture>> searchByTutorNickname(@RequestParam String nickname) {
+        List<Lecture> lectures = lectureService.searchByTutorNickname(nickname);
+        return new ResponseEntity<>(lectures, HttpStatus.OK);
+    }
+
+    // 카테고리로 조회
+    @CrossOrigin
+    @GetMapping("/search/category")
+    public ResponseEntity<List<Lecture>> searchByCategory(@RequestParam String category) {
+        List<Lecture> lectures = lectureService.searchByCategory(category);
+        return new ResponseEntity<>(lectures, HttpStatus.OK);
+    }
+
 
 }

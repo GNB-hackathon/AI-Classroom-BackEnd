@@ -116,8 +116,29 @@ public class LectureService {
         lectureRepository.delete(lecture);
     }
 
-
-    public List<LectureDTO> searchLectures(String keyword) {
-        return null;
+    // 전체 강의 검색
+    public List<Lecture> findAll(){
+        return (List<Lecture>) lectureRepository.findAll();
     }
+
+    // 키워드로 강의 검색 (제목/강의/튜터명)
+    public List<Lecture> searchByKeyword(String keyword) {
+        return lectureRepository.searchByKeyword(keyword);
+    }
+
+    // 강의 제목으로 검색
+    public List<Lecture> searchByTitle(String title) {
+        return lectureRepository.searchByTitle(title);
+    }
+
+    // 튜터 명으로 검색
+    public List<Lecture> searchByTutorNickname(String nickname) {
+        return lectureRepository.searchByTutorNickname(nickname);
+    }
+
+    // 카테고리로 검색
+    public List<Lecture> searchByCategory(String category) {
+        return lectureRepository.searchByCategory(category);
+    }
+
 }
