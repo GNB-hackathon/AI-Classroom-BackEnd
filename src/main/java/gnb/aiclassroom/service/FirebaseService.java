@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class FirebaseService {
     private String firebaseBucket = "ai-classroom-50619.appspot.com";
 
-    public String uploadPhoto (MultipartFile file, String warehouseName) throws IOException {
+    public String uploadVidio (MultipartFile file, String warehouseName) throws IOException {
 
        //Logger logger = LoggerFactory.logger(FirebaseService.class);
 
@@ -27,7 +27,6 @@ public class FirebaseService {
 
             String url = blob.signUrl(365, TimeUnit.DAYS).toString();
             //logger.info(url);
-
 
             return url;
         }

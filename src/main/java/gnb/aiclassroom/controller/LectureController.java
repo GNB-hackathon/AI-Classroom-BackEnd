@@ -4,8 +4,10 @@ import gnb.aiclassroom.dto.LectureDTO;
 import gnb.aiclassroom.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,13 +16,16 @@ import java.util.List;
 @RequestMapping("/api/lecture")
 public class LectureController {
 
-    private LectureService lectureService;
+    private final LectureService lectureService;
 
     // 강의 등록
     @CrossOrigin
-    @PostMapping("/create")
-    public ResponseEntity<String> createLecture(@RequestBody LectureDTO lectureDTO) {
-        lectureService.createLecture(lectureDTO);
+    @PostMapping(value = "/create",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<String> createLecture(@RequestPart LectureDTO lectureDTO,@RequestPart("vidio") MultipartFile file) {
+        lectureService.createLecture(lectureDTO,file);
         return new ResponseEntity<>("Lecture created successfully", HttpStatus.CREATED);
     }
 

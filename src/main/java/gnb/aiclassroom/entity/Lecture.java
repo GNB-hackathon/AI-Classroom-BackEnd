@@ -1,5 +1,6 @@
 package gnb.aiclassroom.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,4 +28,13 @@ public class Lecture extends BaseTimeEntity {
     private Set<Student> owners = new HashSet<>(); // 소장하고 있는 학생들
 
     private String content; // 내용
+
+
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            targetEntity = Vidio.class,
+            mappedBy = "lecture",
+            cascade = CascadeType.ALL)
+    @JsonBackReference // 순환 참조 방지
+    private Vidio vidio;
 }
